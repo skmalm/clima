@@ -11,6 +11,19 @@ import UIKit
 class ViewController: UIViewController {
 
     
+    @IBAction func searchPressed(_ sender: UIButton) {
+        searchSubmitted()
+    }
+    
+    private func searchSubmitted() {
+        cityLabel.text = searchTextField.text
+        searchTextField.endEditing(true)
+        searchTextField.text = ""
+    }
+    
+    @IBOutlet weak var searchTextField: UITextField! { didSet {
+        searchTextField.delegate = self
+        }}
     @IBOutlet weak var conditionImageView: UIImageView!
     @IBOutlet weak var temperatureLabel: UILabel!
     @IBOutlet weak var unitLabel: UILabel!
@@ -19,3 +32,9 @@ class ViewController: UIViewController {
     
 }
 
+extension ViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        searchSubmitted()
+        return true
+    }
+}

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
-    <device id="retina6_5" orientation="portrait" appearance="dark"/>
+    <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
@@ -33,9 +33,9 @@
                                     </button>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gxi-pB-bt9">
                                         <rect key="frame" x="45.333333333333343" y="0.0" width="284.33333333333326" height="34"/>
-                                        <color key="backgroundColor" name="searchBackgroundColor"/>
+                                        <color key="backgroundColor" systemColor="systemFillColor" red="0.47058823529999999" green="0.47058823529999999" blue="0.50196078430000002" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="go"/>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CkU-Nz-oae">
                                         <rect key="frame" x="339.66666666666669" y="0.0" width="34.333333333333314" height="34"/>
@@ -43,6 +43,9 @@
                                         <state key="normal" image="magnifyingglass" catalog="system">
                                             <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="30"/>
                                         </state>
+                                        <connections>
+                                            <action selector="searchPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="dhn-Qx-TyA"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
@@ -103,6 +106,7 @@
                     <connections>
                         <outlet property="cityLabel" destination="ACh-Ik-yMh" id="UpZ-SJ-eRf"/>
                         <outlet property="conditionImageView" destination="1ek-zU-dpN" id="wst-r2-pmx"/>
+                        <outlet property="searchTextField" destination="gxi-pB-bt9" id="ZO1-gz-fQz"/>
                         <outlet property="temperatureLabel" destination="OHZ-hB-aNw" id="VUY-Pw-uPK"/>
                         <outlet property="unitLabel" destination="7n2-6m-Jff" id="yG9-l2-8qL"/>
                     </connections>
@@ -118,10 +122,7 @@
         <image name="magnifyingglass" catalog="system" width="64" height="56"/>
         <image name="sun.max" catalog="system" width="64" height="62"/>
         <namedColor name="conditionColor">
-            <color red="0.083391793069999998" green="0.2410570383" blue="0.2611758113" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="searchBackgroundColor">
-            <color red="0.52362775800000005" green="0.68716555830000003" blue="0.70411914590000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.082999996840953827" green="0.24099999666213989" blue="0.26100000739097595" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>
