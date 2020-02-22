@@ -16,6 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9E106DBF2401DD010065B42A /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		9E1303CD23FF2BC100537537 /* clima.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = clima.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E1303D023FF2BC100537537 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9E1303D223FF2BC100537537 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -40,6 +41,7 @@
 		9E1303C423FF2BC100537537 = {
 			isa = PBXGroup;
 			children = (
+				9E106DBF2401DD010065B42A /* README.md */,
 				9E1303CF23FF2BC100537537 /* clima */,
 				9E1303CE23FF2BC100537537 /* Products */,
 			);
