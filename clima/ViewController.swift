@@ -16,9 +16,10 @@ class ViewController: UIViewController {
     }
     
     private func searchSubmitted() {
-        cityLabel.text = searchTextField.text
+        if searchTextField.text != "" {
+            cityLabel.text = searchTextField.text
+        }
         searchTextField.endEditing(true)
-        searchTextField.text = ""
     }
     
     @IBOutlet weak var searchTextField: UITextField! { didSet {
@@ -36,5 +37,17 @@ extension ViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         searchSubmitted()
         return true
+    }
+    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+        if textField.text == "" {
+            textField.placeholder = "Type a city name here"
+            return false
+        } else {
+            return true
+        }
+    }
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        // Use text field text to get weather for that city
+        textField.text = ""
     }
 }
