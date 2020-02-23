@@ -9,7 +9,6 @@
 import UIKit
 
 class ViewController: UIViewController {
-
     
     @IBAction func searchPressed(_ sender: UIButton) {
         searchSubmitted()
@@ -47,7 +46,8 @@ extension ViewController: UITextFieldDelegate {
         }
     }
     func textFieldDidEndEditing(_ textField: UITextField) {
-        // Use text field text to get weather for that city
+        let weather = WeatherManager(forCity: textField.text!, withUnits: .imperial)
+        weather.performRequest()
         textField.text = ""
     }
 }
