@@ -16,7 +16,7 @@ struct WeatherManager {
     
     var urlString: String {
         // Sample call: api.openweathermap.org/data/2.5/weather?q={city name}&appid={your api key}
-        return "\(urlBase)q=\(city)&units=\(units.rawValue)&appid=\(apiKey)"
+        return "\(urlBase)q=\(city.withoutSpaces)&units=\(units.rawValue)&appid=\(apiKey)"
     }
     
     func performRequest() {
@@ -26,6 +26,7 @@ struct WeatherManager {
         let session = URLSession(configuration: .default)
         // 3: Give the session a task
         assert(url != nil, "Error creating URL from urlString")
+        print(url!)
         let task = session.dataTask(with: url!) { data, response, error in
             assert(error == nil, "Networking error: \(error!)")
             assert(data != nil, "Error getting data")
@@ -39,11 +40,12 @@ struct WeatherManager {
         let decoder = JSONDecoder()
         do {
             let decodedData = try decoder.decode(WeatherData.self, from: weatherData)
-            print(decodedData)
+            let weatherModel = WeatherModel(fromWeatherData: decodedData)
+            print(weatherModel.conditionSymbolName)
+            print(weatherModel.temperatureString)
         } catch {
             print(error)
         }
-        
     }
     
     init(forCity city: String, withUnits units: Units) {
@@ -55,4 +57,10 @@ struct WeatherManager {
 enum Units: String {
     case imperial
     case metric
+}
+
+extension String {
+    var withoutSpaces: String {
+        return self.replacingOccurrences(of: " ", with: "")
+    }
 }

@@ -12,7 +12,7 @@ struct WeatherData: Decodable, CustomStringConvertible {
     
     var description: String {
         guard weather.count > 0 else { return "ERROR" }
-        return "\(weather[0].description). It is \(main.temp) degrees in the city of \(name)."
+        return "Condition code: \(weather[0].id). It is \(main.temp) degrees in the city of \(name)."
     }
     
     let weather: Array<Weather>
@@ -25,5 +25,5 @@ struct Main: Decodable {
 }
 
 struct Weather: Decodable {
-    let description: String
+    let id: Int
 }
