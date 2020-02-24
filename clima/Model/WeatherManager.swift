@@ -29,10 +29,21 @@ struct WeatherManager {
         let task = session.dataTask(with: url!) { data, response, error in
             assert(error == nil, "Networking error: \(error!)")
             assert(data != nil, "Error getting data")
-            print(String(data: data!, encoding: .utf8) ?? "Error casting data to string")
+            self.parseJSON(weatherData: data!)
         }
         // 4: Start the task
         task.resume()
+    }
+    
+    func parseJSON(weatherData: Data) {
+        let decoder = JSONDecoder()
+        do {
+            let decodedData = try decoder.decode(WeatherData.self, from: weatherData)
+            print(decodedData)
+        } catch {
+            print(error)
+        }
+        
     }
     
     init(forCity city: String, withUnits units: Units) {
