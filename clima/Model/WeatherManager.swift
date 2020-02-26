@@ -23,11 +23,11 @@ struct WeatherManager {
         // 1: create a URL
         let url = URL(string: urlString)
         // 2: create a URL Session
-        let session = URLSession(configuration: .default)
+            // I'm using the singleton shared session as I don't need configuration.
         // 3: Give the session a task
         assert(url != nil, "Error creating URL from urlString")
         print(url!)
-        let task = session.dataTask(with: url!) { data, response, error in
+        let task = URLSession.shared.dataTask(with: url!) { data, response, error in
             assert(error == nil, "Networking error: \(error!)")
             assert(data != nil, "Error getting data")
             self.parseJSON(weatherData: data!)
