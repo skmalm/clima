@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class WeatherViewController: UIViewController {
     
     @IBAction func searchPressed(_ sender: UIButton) {
         searchSubmitted()
@@ -32,7 +32,7 @@ class ViewController: UIViewController {
     
 }
 
-extension ViewController: UITextFieldDelegate {
+extension WeatherViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         searchSubmitted()
         return true
@@ -46,8 +46,21 @@ extension ViewController: UITextFieldDelegate {
         }
     }
     func textFieldDidEndEditing(_ textField: UITextField) {
-        let weather = WeatherManager(forCity: textField.text!, withUnits: .imperial)
-        weather.performRequest()
+        var weatherManager = WeatherManager(forCity: textField.text!, withUnits: .imperial)
+        weatherManager.delegate = self
+        weatherManager.performRequest()
         textField.text = ""
     }
+}
+
+extension WeatherViewController: WeatherManagerDelegate {
+    func didUpdateWeather(weather: WeatherModel) {
+        DispatchQueue.main.async {
+            print(weather.conditionSymbolName)
+            self.conditionImageView.image = UIImage(systemName: weather.conditionSymbolName)
+            self.temperatureLabel.text = weather.temperatureString
+        }
+    }
+    
+    
 }

@@ -9,6 +9,7 @@
 import Foundation
 
 struct WeatherManager {
+    var delegate: WeatherManagerDelegate?
     private let apiKey = "4e5bdca5dc39547b9ddcd773ed795361"
     private let urlBase = "https://api.openweathermap.org/data/2.5/weather?"
     let city: String
@@ -18,6 +19,7 @@ struct WeatherManager {
         // Sample call: api.openweathermap.org/data/2.5/weather?q={city name}&appid={your api key}
         return "\(urlBase)q=\(city.withoutSpaces)&units=\(units.rawValue)&appid=\(apiKey)"
     }
+    
     
     func performRequest() {
         // 1: create a URL
@@ -30,21 +32,23 @@ struct WeatherManager {
         let task = URLSession.shared.dataTask(with: url!) { data, response, error in
             assert(error == nil, "Networking error: \(error!)")
             assert(data != nil, "Error getting data")
-            self.parseJSON(weatherData: data!)
+            if let weather = self.parseJSON(weatherData: data!) {
+                self.delegate?.didUpdateWeather(weather: weather)
+            }
         }
         // 4: Start the task
         task.resume()
     }
     
-    func parseJSON(weatherData: Data) {
+    func parseJSON(weatherData: Data) -> WeatherModel? {
         let decoder = JSONDecoder()
         do {
             let decodedData = try decoder.decode(WeatherData.self, from: weatherData)
             let weatherModel = WeatherModel(fromWeatherData: decodedData)
-            print(weatherModel.conditionSymbolName)
-            print(weatherModel.temperatureString)
+            return weatherModel
         } catch {
             print(error)
+            return nil
         }
     }
     
