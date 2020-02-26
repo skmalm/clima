@@ -33,7 +33,7 @@ struct WeatherManager {
             assert(error == nil, "Networking error: \(error!)")
             assert(data != nil, "Error getting data")
             if let weather = self.parseJSON(weatherData: data!) {
-                self.delegate?.didUpdateWeather(weather: weather)
+                self.delegate?.didUpdateWeather(weather)
             }
         }
         // 4: Start the task
@@ -66,4 +66,8 @@ extension String {
     var withoutSpaces: String {
         return self.replacingOccurrences(of: " ", with: "")
     }
+}
+
+protocol WeatherManagerDelegate {
+    func didUpdateWeather(_ weather: WeatherModel)
 }
