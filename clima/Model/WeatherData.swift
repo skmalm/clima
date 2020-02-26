@@ -6,8 +6,6 @@
 //  Copyright © 2020 SebastianMalm. All rights reserved.
 //
 
-import Foundation
-
 struct WeatherData: Decodable, CustomStringConvertible {
     
     var description: String {

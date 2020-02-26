@@ -6,8 +6,6 @@
 //  Copyright © 2020 SebastianMalm. All rights reserved.
 //
 
-import Foundation
-
 protocol WeatherManagerDelegate {
     func didUpdateWeather(weather: WeatherModel)
 }
