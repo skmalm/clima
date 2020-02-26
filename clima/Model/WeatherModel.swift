@@ -42,7 +42,7 @@ struct WeatherModel {
         case 801...809:
             return "cloud"
         default:
-            return "questionmark"
+            return "hand.thumbsdown"
         }
     }
     
