@@ -7,18 +7,13 @@
 //
 
 struct WeatherModel {
-    
+        
     let cityName: String
     
-    let temperature: Double?
+    let temperature: Double
     
     var temperatureString: String {
-        if let actualTemperature = temperature {
-            return String(format: "%.0f", actualTemperature)
-        } else {
-            return "??"
-        }
-        
+        return String(format: "%.0f", temperature)
     }
     
     let conditionID: Int
@@ -42,19 +37,13 @@ struct WeatherModel {
         case 801...809:
             return "cloud"
         default:
-            return "hand.thumbsdown"
+            return "questionmark.circle"
         }
     }
     
-    init(fromWeatherData weatherData: WeatherData?) {
-        if weatherData != nil {
-            cityName = weatherData!.name
-            temperature = weatherData!.main.temp
-            conditionID = weatherData!.weather.count > 0 ? weatherData!.weather[0].id : 0
-        } else {
-            cityName = "??"
-            temperature = nil
-            conditionID = 0
-        }
+    init(fromWeatherData weatherData: WeatherData) {
+        cityName = weatherData.name
+        temperature = weatherData.main.temp
+        conditionID = weatherData.weather.count > 0 ? weatherData.weather[0].id : 0
     }
 }

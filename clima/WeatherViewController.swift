@@ -10,14 +10,16 @@ import UIKit
 
 class WeatherViewController: UIViewController {
     
+    override func viewDidLoad() {
+        conditionImageView.isHidden = true
+    }
+    
     @IBAction func searchPressed(_ sender: UIButton) {
         searchSubmitted()
     }
     
     private func searchSubmitted() {
-        if searchTextField.text != "" {
-            cityLabel.text = searchTextField.text
-        }
+        conditionImageView.isHidden = false
         searchTextField.endEditing(true)
     }
     
@@ -54,10 +56,20 @@ extension WeatherViewController: UITextFieldDelegate {
 }
 
 extension WeatherViewController: WeatherManagerDelegate {
-    func didUpdateWeather(_ weather: WeatherModel) {
+    func didFailWithError(_ weatherManager: WeatherManager, error: Error) {
+        print(error)
+        DispatchQueue.main.async {
+            self.conditionImageView.image = UIImage(systemName: "hand.thumbsdown")
+            self.temperatureLabel.text = "??"
+            self.cityLabel.text = "ERROR"
+        }
+    }
+    
+    func didUpdateWeather(_ weatherManager: WeatherManager, weather: WeatherModel) {
         DispatchQueue.main.async {
             self.conditionImageView.image = UIImage(systemName: weather.conditionSymbolName)
             self.temperatureLabel.text = weather.temperatureString
+            self.cityLabel.text = weather.cityName
         }
     }
     

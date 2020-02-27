@@ -30,24 +30,29 @@ struct WeatherManager {
         assert(url != nil, "Error creating URL from urlString")
         print(url!)
         let task = URLSession.shared.dataTask(with: url!) { data, response, error in
-            assert(error == nil, "Networking error: \(error!)")
-            assert(data != nil, "Error getting data")
-            if let weather = self.parseJSON(weatherData: data!) {
-                self.delegate?.didUpdateWeather(weather)
+            if error != nil {
+                self.delegate?.didFailWithError(self, error: error!)
+            } else if data == nil {
+                self.delegate?.didFailWithError(self, error: WeatherError.dataError("Data error"))
+            } else {
+                if let weather = self.parseJSON(data!) {
+                    self.delegate?.didUpdateWeather(self, weather: weather)
+                }
             }
+            
         }
         // 4: Start the task
         task.resume()
     }
     
-    func parseJSON(weatherData: Data) -> WeatherModel? {
+    func parseJSON(_ weatherData: Data) -> WeatherModel? {
         let decoder = JSONDecoder()
         do {
             let decodedData = try decoder.decode(WeatherData.self, from: weatherData)
             return WeatherModel(fromWeatherData: decodedData)
         } catch {
-            print(error)
-            return WeatherModel(fromWeatherData: nil)
+            self.delegate?.didFailWithError(self, error: WeatherError.decodingError("Decoding error"))
+            return nil
         }
     }
     
@@ -69,5 +74,11 @@ extension String {
 }
 
 protocol WeatherManagerDelegate {
-    func didUpdateWeather(_ weather: WeatherModel)
+    func didUpdateWeather(_ weatherManager: WeatherManager, weather: WeatherModel)
+    func didFailWithError(_ weatherManager: WeatherManager, error: Error)
+}
+
+enum WeatherError: Error {
+    case dataError(String)
+    case decodingError(String)
 }
