@@ -7,7 +7,10 @@
 //
 
 struct WeatherModel {
-        
+    
+    let latitude: Double
+    let longitude: Double
+    
     let cityName: String
     
     let temperature: Double
@@ -42,6 +45,8 @@ struct WeatherModel {
     }
     
     init(fromWeatherData weatherData: WeatherData) {
+        latitude = weatherData.coord.lat
+        longitude = weatherData.coord.lon
         cityName = weatherData.name
         temperature = weatherData.main.temp
         conditionID = weatherData.weather.count > 0 ? weatherData.weather[0].id : 0

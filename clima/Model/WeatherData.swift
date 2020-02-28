@@ -13,9 +13,15 @@ struct WeatherData: Decodable, CustomStringConvertible {
         return "Condition code: \(weather[0].id). It is \(main.temp) degrees in the city of \(name)."
     }
     
+    let coord: Coord
     let weather: Array<Weather>
     let main: Main
     let name: String
+}
+
+struct Coord: Decodable {
+    let lon: Double
+    let lat: Double
 }
 
 struct Main: Decodable {

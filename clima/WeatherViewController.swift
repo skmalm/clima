@@ -28,7 +28,6 @@ class WeatherViewController: UIViewController {
     }
     
     private func searchSubmitted() {
-        conditionImageView.isHidden = false
         searchTextField.endEditing(true)
     }
     
@@ -78,6 +77,7 @@ extension WeatherViewController: WeatherManagerDelegate {
     
     func didUpdateWeather(_ weatherManager: WeatherManager, weather: WeatherModel) {
         DispatchQueue.main.async {
+            self.conditionImageView.isHidden = false
             self.conditionImageView.image = UIImage(systemName: weather.conditionSymbolName)
             self.temperatureLabel.text = weather.temperatureString
             self.cityLabel.text = weather.cityName
@@ -89,12 +89,11 @@ extension WeatherViewController: WeatherManagerDelegate {
 
 extension WeatherViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        if locations.count > 0 {
-            let lat = locations.last!.coordinate.latitude
-            let lon = locations.last!.coordinate.longitude
-            print(lat, lon)
-        }
-        
+        // forc unwrapping locations.last is safe because locations always has at least one item, as per the documentation
+        let coordinates = Coordinates(latitude: locations.last!.coordinate.latitude, longitude: locations.last!.coordinate.longitude)
+        var weatherManager = WeatherManager(forCoorindates: coordinates, withUnits: .imperial)
+        weatherManager.delegate = self
+        weatherManager.performRequest()
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {

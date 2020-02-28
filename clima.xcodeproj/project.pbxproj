@@ -16,6 +16,7 @@
 		9E1303DD23FF2BC200537537 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9E1303DB23FF2BC200537537 /* LaunchScreen.storyboard */; };
 		9E5584402402E6F0003EC39F /* WeatherManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E55843F2402E6F0003EC39F /* WeatherManager.swift */; };
 		9E6AC6872404526200987087 /* WeatherModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6AC6862404526200987087 /* WeatherModel.swift */; };
+		9E6D479A24097F3B005D541D /* Coordinates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6D479924097F3B005D541D /* Coordinates.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +32,7 @@
 		9E1303DE23FF2BC200537537 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9E55843F2402E6F0003EC39F /* WeatherManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherManager.swift; sourceTree = "<group>"; };
 		9E6AC6862404526200987087 /* WeatherModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherModel.swift; sourceTree = "<group>"; };
+		9E6D479924097F3B005D541D /* Coordinates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinates.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +100,7 @@
 				9E55843F2402E6F0003EC39F /* WeatherManager.swift */,
 				9E10DFEE24033CB300D9B088 /* WeatherData.swift */,
 				9E6AC6862404526200987087 /* WeatherModel.swift */,
+				9E6D479924097F3B005D541D /* Coordinates.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -175,6 +178,7 @@
 			files = (
 				9E1303D523FF2BC100537537 /* WeatherViewController.swift in Sources */,
 				9E10DFEF24033CB300D9B088 /* WeatherData.swift in Sources */,
+				9E6D479A24097F3B005D541D /* Coordinates.swift in Sources */,
 				9E5584402402E6F0003EC39F /* WeatherManager.swift in Sources */,
 				9E1303D123FF2BC100537537 /* AppDelegate.swift in Sources */,
 				9E6AC6872404526200987087 /* WeatherModel.swift in Sources */,

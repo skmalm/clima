@@ -12,18 +12,27 @@ struct WeatherManager {
     var delegate: WeatherManagerDelegate?
     private let apiKey = "4e5bdca5dc39547b9ddcd773ed795361"
     private let urlBase = "https://api.openweathermap.org/data/2.5/weather?"
-    let city: String
     let units: Units
     
-    var urlString: String {
+    var city: String?
+    var coordinates: Coordinates?
+    
+    var urlString: String? {
         // Sample call: api.openweathermap.org/data/2.5/weather?q={city name}&appid={your api key}
-        return "\(urlBase)q=\(city.withoutSpaces)&units=\(units.rawValue)&appid=\(apiKey)"
+        if coordinates != nil {
+            return "\(urlBase)lat=\(coordinates!.latitude)&lon=\(coordinates!.longitude)&units=\(units.rawValue)&appid=\(apiKey)"
+        } else if city != nil {
+            return "\(urlBase)q=\(city!.withoutSpaces)&units=\(units.rawValue)&appid=\(apiKey)"
+        } else {
+            return nil
+        }
     }
     
     
     func performRequest() {
         // 1: create a URL
-        let url = URL(string: urlString)
+        guard urlString != nil else { return }
+        let url = URL(string: urlString!)
         // 2: create a URL Session
             // I'm using the singleton shared session as I don't need configuration.
         // 3: Give the session a task
@@ -57,8 +66,13 @@ struct WeatherManager {
     }
     
     init(forCity city: String, withUnits units: Units) {
-        self.city = city
         self.units = units
+        self.city = city
+    }
+    
+    init(forCoorindates coordinates: Coordinates, withUnits units: Units) {
+        self.units = units
+        self.coordinates = coordinates
     }
 }
 
