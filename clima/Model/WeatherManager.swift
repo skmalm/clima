@@ -76,11 +76,6 @@ struct WeatherManager {
     }
 }
 
-enum Units: String {
-    case imperial
-    case metric
-}
-
 extension String {
     var withoutSpaces: String {
         return self.replacingOccurrences(of: " ", with: "")
