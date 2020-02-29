@@ -10,7 +10,6 @@ import Foundation
 
 struct WeatherManager {
     var delegate: WeatherManagerDelegate?
-    private let apiKey = "4e5bdca5dc39547b9ddcd773ed795361"
     private let urlBase = "https://api.openweathermap.org/data/2.5/weather?"
     let units: Units
     
@@ -20,9 +19,9 @@ struct WeatherManager {
     var urlString: String? {
         // Sample call: api.openweathermap.org/data/2.5/weather?q={city name}&appid={your api key}
         if coordinates != nil {
-            return "\(urlBase)lat=\(coordinates!.latitude)&lon=\(coordinates!.longitude)&units=\(units.rawValue)&appid=\(apiKey)"
+            return "\(urlBase)lat=\(coordinates!.latitude)&lon=\(coordinates!.longitude)&units=\(units.rawValue)&appid=\(SensitiveConstants.openWeatherAPIKey)"
         } else if city != nil {
-            return "\(urlBase)q=\(city!.withoutSpaces)&units=\(units.rawValue)&appid=\(apiKey)"
+            return "\(urlBase)q=\(city!.withoutSpaces)&units=\(units.rawValue)&appid=\(SensitiveConstants.openWeatherAPIKey)"
         } else {
             return nil
         }
