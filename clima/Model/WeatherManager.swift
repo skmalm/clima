@@ -9,14 +9,15 @@
 import Foundation
 
 struct WeatherManager {
+    
+    // MARK: - Properties
+    
     var delegate: WeatherManagerDelegate?
     private let urlBase = "https://api.openweathermap.org/data/2.5/weather?"
     let units: Units
-    
     var city: String?
     var coordinates: Coordinates?
-    
-    var urlString: String? {
+    private var urlString: String? {
         // Sample call: api.openweathermap.org/data/2.5/weather?q={city name}&appid={your api key}
         if coordinates != nil {
             return "\(urlBase)lat=\(coordinates!.latitude)&lon=\(coordinates!.longitude)&units=\(units.rawValue)&appid=\(SensitiveConstants.openWeatherAPIKey)"
@@ -27,6 +28,7 @@ struct WeatherManager {
         }
     }
     
+    // MARK: - Methods
     
     func performRequest() {
         // 1: create a URL
@@ -52,8 +54,7 @@ struct WeatherManager {
         // 4: Start the task
         task.resume()
     }
-    
-    func parseJSON(_ weatherData: Data) -> WeatherModel? {
+    private func parseJSON(_ weatherData: Data) -> WeatherModel? {
         let decoder = JSONDecoder()
         do {
             let decodedData = try decoder.decode(WeatherData.self, from: weatherData)
@@ -64,16 +65,19 @@ struct WeatherManager {
         }
     }
     
+    // MARK: - Initializers
+    
     init(forCity city: String, withUnits units: Units) {
         self.units = units
         self.city = city
     }
-    
     init(forCoorindates coordinates: Coordinates, withUnits units: Units) {
         self.units = units
         self.coordinates = coordinates
     }
 }
+
+// MARK: - Extensions and Local Types
 
 extension String {
     var withoutSpaces: String {
@@ -86,7 +90,7 @@ protocol WeatherManagerDelegate {
     func didFailWithError(_ weatherManager: WeatherManager, error: Error)
 }
 
-enum WeatherError: Error {
+private enum WeatherError: Error {
     case dataError(String)
     case decodingError(String)
 }
