@@ -13,13 +13,13 @@ struct WeatherModel {
     
     let cityName: String
     
-    let temperature: Double
+    private let temperature: Double
     
     var temperatureString: String {
         return String(format: "%.0f", temperature)
     }
     
-    let conditionID: Int
+    private let conditionID: Int
     
     var conditionSymbolName: String {
         switch conditionID {

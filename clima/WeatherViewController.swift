@@ -13,13 +13,13 @@ class WeatherViewController: UIViewController {
     
     // MARK: - Properties
     
-    var weatherManager = WeatherManager()
-    let locationManager = CLLocationManager()
-    @IBOutlet weak var searchTextField: UITextField! { didSet { searchTextField.delegate = self }}
-    @IBOutlet weak var conditionImageView: UIImageView!
-    @IBOutlet weak var temperatureLabel: UILabel!
-    @IBOutlet weak var unitLabel: UILabel!
-    @IBOutlet weak var cityLabel: UILabel!
+    private var weatherManager = WeatherManager()
+    private let locationManager = CLLocationManager()
+    @IBOutlet private weak var searchTextField: UITextField! { didSet { searchTextField.delegate = self }}
+    @IBOutlet private weak var conditionImageView: UIImageView!
+    @IBOutlet private weak var temperatureLabel: UILabel!
+    @IBOutlet private weak var unitLabel: UILabel!
+    @IBOutlet private weak var cityLabel: UILabel!
     
     // MARK: - Methods
     
@@ -33,11 +33,11 @@ class WeatherViewController: UIViewController {
         searchTextField.endEditing(true)
     }
     
-    @IBAction func currentLocationButtonPressed(_ sender: UIButton) {
+    @IBAction private func currentLocationButtonPressed(_ sender: UIButton) {
         locationManager.requestWhenInUseAuthorization()
         locationManager.requestLocation()
     }
-    @IBAction func searchPressed(_ sender: UIButton) { searchSubmitted() }
+    @IBAction private func searchPressed(_ sender: UIButton) { searchSubmitted() }
     
     
 }
