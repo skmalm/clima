@@ -13,6 +13,7 @@ class WeatherViewController: UIViewController {
     
     // MARK: - Properties
     
+    var weatherManager = WeatherManager()
     let locationManager = CLLocationManager()
     @IBOutlet weak var searchTextField: UITextField! { didSet { searchTextField.delegate = self }}
     @IBOutlet weak var conditionImageView: UIImageView!
@@ -24,6 +25,7 @@ class WeatherViewController: UIViewController {
     
     override func viewDidLoad() {
         conditionImageView.isHidden = true
+        weatherManager.delegate = self
         locationManager.delegate = self
     }
     
@@ -56,9 +58,7 @@ extension WeatherViewController: UITextFieldDelegate {
         }
     }
     func textFieldDidEndEditing(_ textField: UITextField) {
-        var weatherManager = WeatherManager(forCity: textField.text!, withUnits: .imperial)
-        weatherManager.delegate = self
-        weatherManager.performRequest()
+        weatherManager.fetchWeather(forCity: textField.text!, withUnits: .imperial)
         textField.text = ""
     }
 }
@@ -91,9 +91,7 @@ extension WeatherViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         // forc unwrapping locations.last is safe because locations always has at least one item, as per the documentation
         let coordinates = Coordinates(latitude: locations.last!.coordinate.latitude, longitude: locations.last!.coordinate.longitude)
-        var weatherManager = WeatherManager(forCoorindates: coordinates, withUnits: .imperial)
-        weatherManager.delegate = self
-        weatherManager.performRequest()
+        weatherManager.fetchWeather(forCoordinates: coordinates, withUnits: .imperial)
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {

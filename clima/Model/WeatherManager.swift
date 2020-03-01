@@ -10,35 +10,31 @@ import Foundation
 
 struct WeatherManager {
     
+    // Sample API call: https://api.openweathermap.org/data/2.5/weather?q={city name}&appid={your api key}
+    
     // MARK: - Properties
     
     var delegate: WeatherManagerDelegate?
     private let urlBase = "https://api.openweathermap.org/data/2.5/weather?"
-    let units: Units
-    var city: String?
-    var coordinates: Coordinates?
-    private var urlString: String? {
-        // Sample call: api.openweathermap.org/data/2.5/weather?q={city name}&appid={your api key}
-        if coordinates != nil {
-            return "\(urlBase)lat=\(coordinates!.latitude)&lon=\(coordinates!.longitude)&units=\(units.rawValue)&appid=\(SensitiveConstants.openWeatherAPIKey)"
-        } else if city != nil {
-            return "\(urlBase)q=\(city!.withoutSpaces)&units=\(units.rawValue)&appid=\(SensitiveConstants.openWeatherAPIKey)"
-        } else {
-            return nil
-        }
-    }
     
     // MARK: - Methods
     
-    func performRequest() {
-        // 1: create a URL
-        guard urlString != nil else { return }
-        let url = URL(string: urlString!)
-        // 2: create a URL Session
-            // I'm using the singleton shared session as I don't need configuration.
-        // 3: Give the session a task
+    // Sample call: api.openweathermap.org/data/2.5/weather?q={city name}&appid={your api key}
+    func fetchWeather(forCity city: String, withUnits units: Units) {
+        let urlString = "\(urlBase)q=\(city.withoutSpaces)&units=\(units.rawValue)&appid=\(SensitiveConstants.openWeatherAPIKey)"
+        print("api call URL string: \(urlString)")
+        performRequest(withURLString: urlString)
+    }
+    
+    func fetchWeather(forCoordinates coordinates: Coordinates, withUnits units: Units) {
+        let urlString = "\(urlBase)lat=\(coordinates.latitude)&lon=\(coordinates.longitude)&units=\(units.rawValue)&appid=\(SensitiveConstants.openWeatherAPIKey)"
+        print("api call URL string: \(urlString)")
+        performRequest(withURLString: urlString)
+    }
+    
+    private func performRequest(withURLString urlString: String) {
+        let url = URL(string: urlString)
         assert(url != nil, "Error creating URL from urlString")
-        print(url!)
         let task = URLSession.shared.dataTask(with: url!) { data, response, error in
             if error != nil {
                 self.delegate?.didFailWithError(self, error: error!)
@@ -51,7 +47,6 @@ struct WeatherManager {
             }
             
         }
-        // 4: Start the task
         task.resume()
     }
     private func parseJSON(_ weatherData: Data) -> WeatherModel? {
@@ -63,17 +58,6 @@ struct WeatherManager {
             self.delegate?.didFailWithError(self, error: WeatherError.decodingError("Decoding error"))
             return nil
         }
-    }
-    
-    // MARK: - Initializers
-    
-    init(forCity city: String, withUnits units: Units) {
-        self.units = units
-        self.city = city
-    }
-    init(forCoorindates coordinates: Coordinates, withUnits units: Units) {
-        self.units = units
-        self.coordinates = coordinates
     }
 }
 
